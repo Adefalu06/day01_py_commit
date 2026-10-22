@@ -2,31 +2,29 @@ import sys
 import random
 from enum import Enum
 
+def play_game():
+    class RPS(Enum):
+        ROCK = 1
+        PAPER = 2
+        SCISSORS = 3
 
-class RPS(Enum):
-    ROCK = 1
-    PAPER = 2
-    SCISSORS = 3
-
-
-playagain = True
-
-while playagain:
-
-    playerchoice = input(
+    playerChoice = input(
         "\nEnter... \n1 for Rock,\n2 for Paper, or \n3 for Scissors:\n\n")
 
-    player = int(playerchoice)
+    if playerChoice  not in ["1","2","3"]:
+        print("You must enter 1, 2, or 3.")
+        return play_game()
 
-    if player < 1 or player > 3:
-        sys.exit("You must enter 1, 2, or 3.")
+ 
+    player =int(playerChoice)
 
-    computerchoice = random.choice("123")
+    computerChoice = random.choice("123")
 
-    computer = int(computerchoice)
+    computer = int(computerChoice)
 
     print("\nYou chose " + str(RPS(player)).replace('RPS.', '').title() + ".")
     print("Python chose " + str(RPS(computer)).replace('RPS.', '').title() + ".\n")
+    
 
     if player == 1 and computer == 3:
         print("🎉 You win!")
@@ -39,13 +37,20 @@ while playagain:
     else:
         print("🐍 Python wins!")
 
-    playagain = input("\nPlay again? \nY for Yes or \nQ to Quit \n\n")
+    print("\nPlay again? ")
 
-    if playagain.lower() == "y":
-        continue
+    while True:
+        playAgain = input("\nY for Yes or \nQ to Quit \n\n")
+        if playAgain.lower() not in ["y","q"]:
+            continue
+        else:
+            break
+
+    if playAgain.lower() == "y":
+        return play_game()
     else:
         print("\n🎉🎉🎉🎉")
         print("Thank you for playing!\n")
-        playagain = False
+    sys.exit("Bye! 👋")
 
-sys.exit("Bye! 👋")
+play_game()
